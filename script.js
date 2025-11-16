@@ -1,4 +1,4 @@
-// ----- Simple GitHub-friendly login -----
+// ===== USERS =====
 const users = [
   {username:"user1", password:"Pass@123"},
   {username:"user2", password:"Pass@456"},
@@ -6,43 +6,44 @@ const users = [
 ];
 
 function login(){
-  const u = document.getElementById("username").value.trim();
+  const u = document.getElementById("username").value.trim().toLowerCase();
   const p = document.getElementById("password").value.trim();
   const error = document.getElementById("login-error");
-  const user = users.find(x=>x.username===u && x.password===p);
+
+  const user = users.find(x => x.username.toLowerCase() === u && x.password === p);
   if(user){
     document.getElementById("login-form").style.display="none";
     document.getElementById("quiz-area").style.display="block";
-    initQuiz(); // Start the quiz here
+    initQuiz();
   } else {
     error.textContent = "Invalid username or password!";
   }
 }
 
-// ----- QUIZ CODE -----
+// ===== QUIZ DATA =====
 const QUIZ_TITLE = "APTET ENGLISH Paper 1 : Model Paper 1";
 const questions = [
-  {q:"She got right to the top, the worlds most sought after multipercussionist with a mastery of some thousand instruments and a hectic international schedule.\nChoose the synonym of the word ‘hectic’", options:["curious","sensation","fault","busy"], answerId:3},
-  {q:"She showed her brave side during the crisis. Identify the antonym of the word ‘brave’. ", options:["Courageous","Coward","Fearless","Bold"], answerId:1},
-  {q:"Identify the term for a clause that cannot form a sentence by itself and is connected to a main clause:", options:["Compound clause","Dependent clause","Independent clause","Complex clause"], answerId:1},
-  {q:"Choose the sentence that correctly transforms the complex sentence into a compound sentence: “Since it was his birthday, he received many gifts.”", options:["It was his birthday, and he received many gifts.","He received many gifts, but it was his birthday.","It was his birthday as he received many gifts.","He received many gifts because it was his birthday."], answerId:0},
-  {q:"The term for a person who deals with problems and situations by focusing on practical approaches.", options:["Realist","Pragmatist","Quixotic","Pessimist"], answerId:1},
-  {q:"Choose the modal verb that is least formal when asking for permission:", options:["may","could","might","can"], answerId:3}
+  {q:"Synonym of ‘hectic’", options:["curious","sensation","fault","busy"], answerId:3},
+  {q:"Antonym of ‘brave’", options:["Courageous","Coward","Fearless","Bold"], answerId:1},
+  {q:"Clause that cannot form sentence alone", options:["Compound clause","Dependent clause","Independent clause","Complex clause"], answerId:1},
+  {q:"Complex → compound: Since it was his birthday, he received many gifts.", options:["It was his birthday, and he received many gifts.","He received many gifts, but it was his birthday.","It was his birthday as he received many gifts.","He received many gifts because it was his birthday."], answerId:0},
+  {q:"Person who focuses on practical approaches", options:["Realist","Pragmatist","Quixotic","Pessimist"], answerId:1},
+  {q:"Least formal modal verb to ask permission", options:["may","could","might","can"], answerId:3}
   // Add all remaining questions here
 ];
 
+// ===== QUIZ LOGIC =====
 let current=0, answers=Array(questions.length).fill(null), submitted=false;
 let timeLeft=questions.length*60, timerInterval;
 
-// ---- Initialize Quiz ----
 function initQuiz(){
   renderNav();
   renderQuestion();
   startTimer();
 }
 
-// ---- Navigation ----
 function toggleNav(){document.getElementById("question-nav").classList.toggle("hidden");}
+
 function renderNav(){
   const nav=document.getElementById("question-nav"); nav.innerHTML="";
   questions.forEach((_,i)=>{
@@ -54,6 +55,7 @@ function renderNav(){
   });
   updateStats();
 }
+
 function renderQuestion(){
   const q=questions[current];
   const c=document.getElementById("question-container");
@@ -69,6 +71,7 @@ function renderQuestion(){
   h+="</div>"; c.innerHTML=h; renderNav();
   if(window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([c]);
 }
+
 function selectOpt(i){ if(submitted) return; answers[current]=i; renderNav();}
 function nextQuestion(){if(current<questions.length-1){current++; renderQuestion();}}
 function prevQuestion(){if(current>0){current--; renderQuestion();}}
@@ -77,14 +80,17 @@ function updateStats(){
   document.getElementById("answered").textContent="Answered: "+a;
   document.getElementById("not-answered").textContent="Not answered: "+(questions.length-a);
 }
+
 function startTimer(){
   updateTimer();
   timerInterval=setInterval(()=>{timeLeft--;updateTimer(); if(timeLeft<=0){clearInterval(timerInterval); submitQuiz();}},1000);
 }
+
 function updateTimer(){
   const m=Math.floor(timeLeft/60), s=timeLeft%60;
   document.getElementById("timer").textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
 }
+
 function submitQuiz(){
   if(submitted) return; submitted=true; clearInterval(timerInterval);
   let correct=0, wrong=0;
@@ -104,6 +110,7 @@ function submitQuiz(){
   document.getElementById("result-section").classList.remove("hidden");
   renderQuestion();
 }
+
 function toggleFullscreen(){
   if(!document.fullscreenElement){document.documentElement.requestFullscreen().catch(err=>alert(err.message));} 
   else {document.exitFullscreen();}
