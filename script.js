@@ -1,6 +1,6 @@
 // ----- Simple GitHub-friendly login -----
 const users = [
-  {username:"JCV001", password:"ajgY#275"},
+  {username:"user1", password:"Pass@123"},
   {username:"user2", password:"Pass@456"},
   {username:"admin", password:"Admin@123"}
 ];
@@ -13,6 +13,7 @@ function login(){
   if(user){
     document.getElementById("login-form").style.display="none";
     document.getElementById("quiz-area").style.display="block";
+    initQuiz(); // Start the quiz here
   } else {
     error.textContent = "Invalid username or password!";
   }
@@ -21,14 +22,26 @@ function login(){
 // ----- QUIZ CODE -----
 const QUIZ_TITLE = "APTET ENGLISH Paper 1 : Model Paper 1";
 const questions = [
-  {q:"She got right to the top, the worlds most sought after multipercussionist with a mastery of some thousand instruments and a hectic international schedule.\n Choose the synonym of the word ‘hectic’", options:["curious","sensation","fault","busy"], answerId:3},
+  {q:"She got right to the top, the worlds most sought after multipercussionist with a mastery of some thousand instruments and a hectic international schedule.\nChoose the synonym of the word ‘hectic’", options:["curious","sensation","fault","busy"], answerId:3},
   {q:"She showed her brave side during the crisis. Identify the antonym of the word ‘brave’. ", options:["Courageous","Coward","Fearless","Bold"], answerId:1},
-  {q:"Identify the term for a clause that cannot form a sentence by itself and is connected to a main clause:", options:["Compound clause","Dependent clause","Independent clause","Complex clause"], answerId:1}
+  {q:"Identify the term for a clause that cannot form a sentence by itself and is connected to a main clause:", options:["Compound clause","Dependent clause","Independent clause","Complex clause"], answerId:1},
+  {q:"Choose the sentence that correctly transforms the complex sentence into a compound sentence: “Since it was his birthday, he received many gifts.”", options:["It was his birthday, and he received many gifts.","He received many gifts, but it was his birthday.","It was his birthday as he received many gifts.","He received many gifts because it was his birthday."], answerId:0},
+  {q:"The term for a person who deals with problems and situations by focusing on practical approaches.", options:["Realist","Pragmatist","Quixotic","Pessimist"], answerId:1},
+  {q:"Choose the modal verb that is least formal when asking for permission:", options:["may","could","might","can"], answerId:3}
+  // Add all remaining questions here
 ];
 
 let current=0, answers=Array(questions.length).fill(null), submitted=false;
 let timeLeft=questions.length*60, timerInterval;
 
+// ---- Initialize Quiz ----
+function initQuiz(){
+  renderNav();
+  renderQuestion();
+  startTimer();
+}
+
+// ---- Navigation ----
 function toggleNav(){document.getElementById("question-nav").classList.toggle("hidden");}
 function renderNav(){
   const nav=document.getElementById("question-nav"); nav.innerHTML="";
@@ -80,7 +93,13 @@ function submitQuiz(){
   const total = questions.length;
   const score = Math.round((correct/total)*100);
   const name = document.getElementById("username").value;
-  const html=`<h3>Result Summary</h3><p><b>Name:</b> ${name}</p><p><b>Total Questions:</b> ${total}</p><p><b>Correct:</b> ${correct}</p><p><b>Wrong:</b> ${wrong}</p><p><b>Skipped:</b> ${skipped}</p><p><b>Score:</b> ${score}%</p>`;
+  const html=`<h3>Result Summary</h3>
+    <p><b>Name:</b> ${name}</p>
+    <p><b>Total Questions:</b> ${total}</p>
+    <p><b>Correct:</b> ${correct}</p>
+    <p><b>Wrong:</b> ${wrong}</p>
+    <p><b>Skipped:</b> ${skipped}</p>
+    <p><b>Score:</b> ${score}%</p>`;
   document.getElementById("result-section").innerHTML=html;
   document.getElementById("result-section").classList.remove("hidden");
   renderQuestion();
