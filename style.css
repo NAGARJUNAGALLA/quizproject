@@ -1,95 +1,81 @@
-body {
-  font-family: Arial, sans-serif;
+html, body {
   margin: 0;
-  background: #f5f5f5;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
+  height: 100%;
 }
 
-/* Login Form */
-#loginForm {
-  display: flex;
-  flex-direction: column;
-  width: 300px;
-  margin: 100px auto;
-  padding: 30px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+#login-form {
+  text-align: center;
+  margin-top: 100px;
 }
 
-#loginForm input {
-  margin: 10px 0;
+#login-form input {
+  display: block;
+  margin: 10px auto;
   padding: 10px;
-  font-size: 16px;
-}
-
-#loginForm button {
-  padding: 10px;
-  background-color: #1e90ff;
-  color: white;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-#loginForm button:hover {
-  background-color: #0c6cd6;
-}
-
-/* SPA Container */
-#spaContainer {
-  display: none;
-  padding: 20px;
-}
-
-/* Buttons */
-.page-btn {
-  padding: 12px 24px;
-  margin: 10px;
-  font-size: 16px;
-  background-color: #1e90ff;
-  color: white;
-  border: none;
+  width: 80%;
+  max-width: 300px;
   border-radius: 6px;
-  cursor: pointer;
+  border: 1px solid #ccc;
 }
 
-.page-btn:hover {
-  background-color: #0c6cd6;
-}
-
-/* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.8);
-}
-
-.modal-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-}
-
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 28px;
-  font-weight: bold;
-  color: #333;
-  cursor: pointer;
-  z-index: 10000;
-}
-
-.modal iframe {
-  width: 100%;
-  height: 100%;
+#login-form button {
+  padding: 10px 20px;
+  border-radius: 6px;
   border: none;
+  background: #1b4332;
+  color: white;
+  cursor: pointer;
 }
+
+#login-error {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Quiz styles copied from your code */
+.quiz-container {
+  position: absolute;
+  top: -40px;
+  bottom: 20px;
+  left: -10px;
+  right: 0;
+  overflow-y: auto;
+  background: #fff;
+  height: 80vh;
+}
+
+.quiz-header {
+  background-color: #1b4332;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  font-weight: 600;
+  font-size: 18px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.quiz-body { flex: 1; padding: 20px; overflow-y:auto; }
+.stats { display: flex; justify-content: space-between; margin-bottom: 10px; color: #333; }
+.toggle-nav-btn { display: block; width: 100%; background: #1b4332; color: #fff; padding: 8px 0; border: none; border-radius: 6px; margin-bottom: 8px; cursor: pointer; }
+.question-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+.question-nav button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #ccc; background: #f5f5f5; cursor: pointer; font-weight: 500; }
+.question-nav button.active { border: 2px solid #1b4332; }
+.question-nav button.answered { background: #1b4332; color: #fff; }
+#question-container h4 { font-size: 16px; margin-bottom: 8px; color: #333; }
+#question-container p { font-size: 15px; color: #444; }
+.options label { display: block; border: 1px solid #ddd; border-radius: 8px; padding: 10px; margin-bottom: 8px; cursor: pointer; transition: all 0.2s; }
+.options label:hover { border-color: #1e3a8a; background: #f0f4ff; }
+.correct { border-color: green !important; background: #e8fce8 !important; }
+.wrong { border-color: red !important; background: #ffe8e8 !important; }
+.quiz-footer { position: fixed; bottom: 0; left: 0; right:0; display: flex; justify-content: space-between; background-color: #1b4332; padding: 10px; }
+.quiz-footer button { flex: 1; background:white; color: #1b4332; border: none; padding: 10px; border-radius: 25px; margin: 0 5px; cursor: pointer; }
+#result-section { background: #f9f9f9; border-top: 2px solid #1e3a8a; padding: 15px; margin-top: 20px; border-radius: 10px; }
+#result-section.hidden { display:none; }
