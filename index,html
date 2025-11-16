@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPA with Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Login Form -->
+<div id="loginForm">
+  <h2>Login</h2>
+  <input type="text" id="username" placeholder="Username" required>
+  <input type="password" id="password" placeholder="Password" required>
+  <button id="loginBtn">Login</button>
+  <p id="loginError" style="color:red;"></p>
+</div>
+
+<!-- SPA Container -->
+<div id="spaContainer">
+  <h2>Welcome, <span id="userLabel"></span></h2>
+  <button id="logoutBtn" style="float:right;">Logout</button>
+  <div id="buttonContainer"></div>
+</div>
+
+<!-- Modal -->
+<div id="pageModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <iframe id="modalIframe" src=""></iframe>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
